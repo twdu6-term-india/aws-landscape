@@ -6,6 +6,8 @@ ENV TERRAFORM_VERSION=0.11.14
 ENV PACKER_SHA256SUM=258d1baa23498932baede9b40f2eca4ac363b86b32487b36f48f5102630e9fbb
 ENV PACKER_VERSION=1.2.4
 
+ENV AWS_DEFAULT_REGION=ap-southeast-1
+ENV TRAINING_COHORT=twdu6in
 
 # Common dependencies
 RUN apk add --no-cache \
@@ -37,6 +39,7 @@ RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/test
 
 # Install AWS and Okta tooling
 RUN pip install virtualenv
+RUN pip install configparser
 RUN virtualenv /okta_venv \
         && source /okta_venv/bin/activate \
         && pip install \
