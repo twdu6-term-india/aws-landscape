@@ -33,3 +33,5 @@ variable "core_count" {
 variable "bastion_security_group_id" {
   description = "Id of bastion security group to allow SSH ingress"
 }
+
+variable "metric_name" {}
