@@ -83,12 +83,18 @@ jobs:
                  ./scripts/run_terraform.sh $TRAINING_COHORT bastion destroy -input=false -auto-approve;
                  ./scripts/run_terraform.sh $TRAINING_COHORT base_networking destroy -input=false -auto-approve;
 
+ deployKafkaServerProperties:
+    <<: *defaults
+    steps:
+    - checkout
+    - run:
+        command: ./scripts/training_kafka/deploy_kafka_properties.sh $BASTION_PUBLIC_IP $TRAINING_COHORT
+
 workflows:
   version: 2
   build:
     jobs:
       - dummy
-
       - approvefirstTimeSetup:
           type: approval
           requires:
@@ -132,3 +138,7 @@ workflows:
       - destroyProductionEnvironment:
           requires:
             - approveDestroyProductionEnvironment
+      - deployKafkaServerProperties:
+          type: approval
+          requires:
+            - dummy
