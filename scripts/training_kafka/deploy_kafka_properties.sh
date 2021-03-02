@@ -14,7 +14,7 @@ echo "
     StrictHostKeyChecking no
     UserKnownHostsFile /dev/null
 
-Host kafka-test.${TRAINING_COHORT}.training
+Host kafka.${TRAINING_COHORT}.training
 	ForwardAgent yes
 	ProxyCommand ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ec2-user@${BASTION_PUBLIC_IP} -W %h:%p 2>/dev/null
 	User ec2-user
@@ -23,9 +23,10 @@ Host kafka-test.${TRAINING_COHORT}.training
 " >> ~/.ssh/config
 
 echo "====SSH Config Updated===="
-scp ./images/training_kafka/conf/server.properties ec2-user@kafka-test.${TRAINING_COHORT}.training:/tmp/kafka-server.properties
+scp ./images/training_kafka/conf/server.properties ec2-user@kafka.${TRAINING_COHORT}.training:/tmp/kafka-server.properties
 ssh kafka.${TRAINING_COHORT}.training <<EOF
 set -e
+sudo mv /tmp/kafka-server.properties /etc/kafka/server.properties
 sudo systemctl restart confluent-kafka
 EOF
 echo "=== Kafka server properties deployed successfully"

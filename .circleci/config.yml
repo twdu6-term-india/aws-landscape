@@ -84,11 +84,14 @@ jobs:
                  ./scripts/run_terraform.sh $TRAINING_COHORT base_networking destroy -input=false -auto-approve;
 
  deployKafkaServerProperties:
-    <<: *defaults
-    steps:
-    - checkout
-    - run:
-        command: ./scripts/training_kafka/deploy_kafka_properties.sh $BASTION_PUBLIC_IP $TRAINING_COHORT
+   <<: *defaults
+   steps:
+     - checkout
+     - add_ssh_keys:
+         fingerprints:
+           - "ef:3c:36:d7:05:c2:57:12:0d:2a:22:8b:4f:ff:62:b7"
+     - run:
+         command: sh ./scripts/training_kafka/deploy_kafka_properties.sh $BASTION_PUBLIC_IP $TRAINING_COHORT;
 
 workflows:
   version: 2
@@ -138,7 +141,12 @@ workflows:
       - destroyProductionEnvironment:
           requires:
             - approveDestroyProductionEnvironment
-      - deployKafkaServerProperties:
+
+      - approveKafkaServerProperties:
           type: approval
           requires:
             - dummy
+      - deployKafkaServerProperties:
+          requires:
+            - approveKafkaServerProperties
+
