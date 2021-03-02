@@ -14,3 +14,5 @@ variable "emr_cluster" {
     "core_count"  = "2"
   }
 }
+
+variable "metric_name" {}

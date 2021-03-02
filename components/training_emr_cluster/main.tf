@@ -37,4 +37,5 @@ module "training_cluster" {
   core_type                 = "${var.emr_cluster["core_type"]}"
   core_count                = "${var.emr_cluster["core_count"]}"
   bastion_security_group_id = "${data.terraform_remote_state.bastion.bastion_security_group_id}"
+  metric_name               = "${var.metric_name}"
 }

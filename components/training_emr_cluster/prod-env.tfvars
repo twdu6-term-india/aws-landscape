@@ -3,3 +3,5 @@ emr_cluster = {
   core_type   = "m4.large"
   core_count  = "3"
 }
+
+metric_name = "MonitorHDFSLocation"
