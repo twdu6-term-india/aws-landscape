@@ -30,6 +30,11 @@
       "script": "scripts/install_amazon_corretto.sh"
     },
     {
+      "type": "file",
+      "source": "./conf/server.properties",
+      "destination": "/tmp/kafka-server.properties"
+    },
+    {
       "type": "shell",
       "script": "./scripts/install_kafka.sh",
       "environment_vars" : [

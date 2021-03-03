@@ -23,6 +23,7 @@ EOF
 sudo yum clean all && sudo yum install -y confluent-platform-oss-${CONFLUENT_SCALA_VERSION}
 
 sudo systemctl enable confluent-zookeeper
+sudo mv /tmp/kafka-server.properties /etc/kafka/server.properties
 sudo systemctl enable confluent-kafka
 
 # Install cloud watch agent prerequirement
