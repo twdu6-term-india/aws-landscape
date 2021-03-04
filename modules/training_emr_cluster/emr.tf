@@ -37,6 +37,18 @@ resource "aws_emr_cluster" "training_cluster" {
 
   service_role = "${aws_iam_role.emr_service.arn}"
 
+  configurations_json = <<EOF
+  [
+    {
+      "Classification": "hdfs-site",
+      "Properties": {
+        "dfs.replication": "2"
+      }
+      "Configurations":[]
+    }
+  ]
+  EOF
+
   instance_group {
     instance_role  = "MASTER"
     instance_type  = "${var.master_type}"

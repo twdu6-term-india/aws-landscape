@@ -26,15 +26,7 @@ jobs:
       - checkout
       - run:
           command: source /okta_venv/bin/activate;
-            ./scripts/run_terraform.sh $TRAINING_COHORT base_networking plan -input=false;
-            ./scripts/run_terraform.sh $TRAINING_COHORT bastion plan -input=false;
-            ./scripts/run_terraform.sh $TRAINING_COHORT training_bucket plan -input=false;
             ./scripts/run_terraform.sh $TRAINING_COHORT training_emr_cluster plan -input=false -var-file=prod-env.tfvars;
-            ./scripts/run_terraform.sh $TRAINING_COHORT training_kafka plan -input=false -var-file=prod-env.tfvars;
-            ./scripts/run_terraform.sh $TRAINING_COHORT ingester plan -input=false -var-file=prod-env.tfvars;
-            ./scripts/run_terraform.sh $TRAINING_COHORT monitoring_dashboard plan -input=false;
-            ./scripts/run_terraform.sh $TRAINING_COHORT client_vpn plan -input=false;
-
 
  buildProductionEnvironment:
      <<: *defaults
@@ -42,14 +34,7 @@ jobs:
      - checkout
      - run:
          command: source /okta_venv/bin/activate;
-                 ./scripts/run_terraform.sh $TRAINING_COHORT base_networking apply -input=false -auto-approve;
-                 ./scripts/run_terraform.sh $TRAINING_COHORT bastion apply -input=false -auto-approve;
-                 ./scripts/run_terraform.sh $TRAINING_COHORT training_bucket apply -input=false -auto-approve;
                  ./scripts/run_terraform.sh $TRAINING_COHORT training_emr_cluster apply -input=false -auto-approve -var-file=prod-env.tfvars;
-                 ./scripts/run_terraform.sh $TRAINING_COHORT training_kafka apply -input=false -auto-approve -var-file=prod-env.tfvars;
-                 ./scripts/run_terraform.sh $TRAINING_COHORT ingester apply -input=false -auto-approve -var-file=prod-env.tfvars;
-                 ./scripts/run_terraform.sh $TRAINING_COHORT monitoring_dashboard apply -input=false -auto-approve;
-                 ./scripts/run_terraform.sh $TRAINING_COHORT client_vpn apply -input=false -auto-approve;
 
  buildClientVPN:
      <<: *defaults
