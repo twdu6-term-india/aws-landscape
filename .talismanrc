@@ -1,3 +1,5 @@
 fileignoreconfig:
 - filename: components/training_emr_cluster/prod-env.tfvars
   checksum: 192bbc0c6ae1d0f3c6dfbaf212cb36ae32acff2ab5ab449218714e7b1a2d7349
+- filename: modules/training_kafka/ec2.tf
+  checksum: d9daf047d1be0ff931f6043803ab49e7f984222ea4ad3d1a68529e99590562a5
