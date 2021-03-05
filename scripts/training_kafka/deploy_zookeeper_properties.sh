@@ -43,7 +43,6 @@ do
   ssh ${host} <<EOF
   set -e
   sudo mv /tmp/zookeeper.properties /etc/kafka/zookeeper.properties
-  sudo systemctl stop confluent-kafka
   sudo systemctl restart confluent-zookeeper
 EOF
 done
