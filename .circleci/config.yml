@@ -83,6 +83,16 @@ jobs:
                  ./scripts/run_terraform.sh $TRAINING_COHORT bastion destroy -input=false -auto-approve;
                  ./scripts/run_terraform.sh $TRAINING_COHORT base_networking destroy -input=false -auto-approve;
 
+ deployZookeeperProperties:
+   <<: *defaults
+   steps:
+     - checkout
+     - add_ssh_keys:
+         fingerprints:
+           - "ef:3c:36:d7:05:c2:57:12:0d:2a:22:8b:4f:ff:62:b7"
+     - run:
+         command: sh ./scripts/training_kafka/deploy_zookeeper_properties.sh $BASTION_PUBLIC_IP $TRAINING_COHORT;
+
  deployKafkaServerProperties:
    <<: *defaults
    steps:
@@ -149,4 +159,12 @@ workflows:
       - deployKafkaServerProperties:
           requires:
             - approveKafkaServerProperties
+
+      - approveZookeeperProperties:
+          type: approval
+          requires:
+            - dummy
+      - deployZookeeperProperties:
+          requires:
+            - approveZookeeperProperties
 
