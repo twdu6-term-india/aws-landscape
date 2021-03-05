@@ -1,3 +1,18 @@
+data "local_file" "zookeeper1_dependencies" {
+  filename = "${path.module}/scripts/createZookeeperIds1.sh"
+}
+
+data "template_cloudinit_config" "zookeeper1__conf" {
+  gzip          = true
+  base64_encode = true
+
+  part {
+    content_type = "text/x-shellscript"
+    content      = "${data.local_file.zookeeper1_dependencies.content}"
+  }
+}
+
+
 data "local_file" "zookeeper2_dependencies" {
   filename = "${path.module}/scripts/createZookeeperIds2.sh"
 }

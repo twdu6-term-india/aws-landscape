@@ -81,3 +81,14 @@ resource "aws_security_group_rule" "zookeeper_leader_ingress_zookeeper" {
   protocol                 = "tcp"
   description              = "Zookeeper ingress for other zookeepers"
 }
+
+
+resource "aws_security_group_rule" "kafka_ingress_kafka" {
+  type                     = "ingress"
+  security_group_id        = "${aws_security_group.kafka.id}"
+  source_security_group_id = "${aws_security_group.kafka.id}"
+  from_port                = 9092
+  to_port                  = 9092
+  protocol                 = "tcp"
+  description              = "Kafka broker to broker ingress"
+}
