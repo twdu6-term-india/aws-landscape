@@ -35,6 +35,11 @@
       "destination": "/tmp/kafka-server.properties"
     },
     {
+      "type": "file",
+      "source": "./conf/zookeeper.properties",
+      "destination": "/tmp/zookeeper.properties"
+    },
+    {
       "type": "shell",
       "script": "./scripts/install_kafka.sh",
       "environment_vars" : [
