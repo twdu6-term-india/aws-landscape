@@ -37,7 +37,7 @@ Host kafka3.${TRAINING_COHORT}.training
 " >> ~/.ssh/config
 
 echo "====SSH Config Updated===="
-for host in kafka.${TRAINING_COHORT}.training kafka2.${TRAINING_COHORT}.training kafka3.${TRAINING_COHORT}.training
+for host in kafka1.${TRAINING_COHORT}.training kafka2.${TRAINING_COHORT}.training kafka3.${TRAINING_COHORT}.training
 do
   scp ./images/training_kafka/conf/zookeeper.properties ec2-user@${host}:/tmp/zookeeper.properties
   ssh ${host} <<EOF

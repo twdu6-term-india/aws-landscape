@@ -48,12 +48,12 @@ resource "aws_cloudwatch_dashboard" "main" {
             "height": 3,
             "properties": {
                 "metrics": [
-                    [ "System/Linux", "MemoryUtilization", "InstanceId", "${data.terraform_remote_state.training_kafka.kafka_instance_id}", { "label": "MemoryUtilization" } ],
-                    [ ".", "DiskSpaceUtilization", "MountPath", "/", "InstanceId", "${data.terraform_remote_state.training_kafka.kafka_instance_id}", "Filesystem", "/dev/xvda1" ]
+                    [ "System/Linux", "MemoryUtilization", "InstanceId", "${data.terraform_remote_state.training_kafka.kafka1_instance_id}", { "label": "MemoryUtilization" } ],
+                    [ ".", "DiskSpaceUtilization", "MountPath", "/", "InstanceId", "${data.terraform_remote_state.training_kafka.kafka1_instance_id}", "Filesystem", "/dev/xvda1" ]
                 ],
                 "view": "singleValue",
                 "region": "${var.aws_region}",
-                "title": "Kafka",
+                "title": "Kafka broker 1",
                 "period": 300
             }
         },
@@ -105,13 +105,13 @@ resource "aws_cloudwatch_dashboard" "main" {
             "height": 3,
             "properties": {
                 "metrics": [
-                    [ "System/Linux", "DiskSpaceUtilization", "MountPath", "/", "InstanceId", "${data.terraform_remote_state.training_kafka.kafka_instance_id}", "Filesystem", "/dev/xvda1", { "label": "DiskSpaceUtilization" } ],
-                    [ ".", "MemoryUtilization", "InstanceId", "${data.terraform_remote_state.training_kafka.kafka_instance_id}" ]
+                    [ "System/Linux", "DiskSpaceUtilization", "MountPath", "/", "InstanceId", "${data.terraform_remote_state.training_kafka.kafka1_instance_id}", "Filesystem", "/dev/xvda1", { "label": "DiskSpaceUtilization" } ],
+                    [ ".", "MemoryUtilization", "InstanceId", "${data.terraform_remote_state.training_kafka.kafka1_instance_id}" ]
                 ],
                 "view": "timeSeries",
                 "stacked": false,
                 "region": "${var.aws_region}",
-                "title": "Kafka Status",
+                "title": "Kafka Broker 1 Status",
                 "period": 300,
                 "yAxis": {
                     "left": {
@@ -161,6 +161,23 @@ resource "aws_cloudwatch_dashboard" "main" {
                     }
                 }
             }
+        },
+        {
+            "type": "metric",
+            "x": 12,
+            "y": 9,
+            "width": 12,
+            "height": 3,
+            "properties": {
+                "view": "timeSeries",
+                "stacked": false,
+                "metrics": [
+                    [ "Custom", "MonitorHDFSLocation" ]
+                  ],
+                "region": "${var.aws_region}",
+                "title": " Stale HDFS data",
+                "period": 300
+                }
         }
     ]
 }
