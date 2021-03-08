@@ -93,6 +93,22 @@ jobs:
      - run:
          command: sh ./scripts/training_kafka/deploy_kafka_properties.sh $BASTION_PUBLIC_IP $TRAINING_COHORT;
 
+ buildDashboard:
+   <<: *defaults
+   steps:
+     - checkout
+     - run:
+         command: source /okta_venv/bin/activate;
+           ./scripts/run_terraform.sh $TRAINING_COHORT monitoring_dashboard apply -input=false -auto-approve;
+
+ destroyDashboard:
+   <<: *defaults
+   steps:
+     - checkout
+     - run:
+         command: source /okta_venv/bin/activate;
+           ./scripts/run_terraform.sh $TRAINING_COHORT monitoring_dashboard destroy -input=false -auto-approve;
+
 workflows:
   version: 2
   build:
@@ -150,3 +166,17 @@ workflows:
           requires:
             - approveKafkaServerProperties
 
+      - approveBuildDashboard:
+          type: approval
+          requires:
+            - dummy
+      - buildDashboard:
+          requires:
+            - approveBuildDashboard
+      - approveDestroyDashboard:
+          type: approval
+          requires:
+            - dummy
+      - destroyDashboard:
+          requires:
+            - approveDestroyDashboard
