@@ -14,7 +14,7 @@ echo "
     StrictHostKeyChecking no
     UserKnownHostsFile /dev/null
 
-Host kafka.${TRAINING_COHORT}.training
+Host kafka1.${TRAINING_COHORT}.training
 	ForwardAgent yes
 	ProxyCommand ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ec2-user@${BASTION_PUBLIC_IP} -W %h:%p 2>/dev/null
 	User ec2-user
